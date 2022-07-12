@@ -14,7 +14,7 @@ export async function rechargeCard(req: Request, res: Response) {
 
     await rechargeService.rechargeCard(apiKey, Number(id), amount);
 
-    res.status(201);
+    res.status(201).send("sucess");;
 
 }
 
@@ -24,7 +24,7 @@ export async function payment(req:Request,res:Response){
 
     await paymentService.payment(Number(id),password,businessId,amount);
 
-    res.status(201);
+    res.status(201).send("sucess");;
 
 }
 

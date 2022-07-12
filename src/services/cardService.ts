@@ -77,14 +77,14 @@ function generateSecurityCode() {
 
 export async function activateCard(id: number, cvc: string, password: string) {
     const card = await getCardById(id);
-    console.log("card",card);
+    console.log("card", card);
     validateExpirationDate(card.expirationDate);
-    validateCVC(cvc,card.securityCode);
+    validateCVC(cvc, card.securityCode);
 
     const activeCard = card.password;
 
-    if(activeCard){
-        throw { type: "bad_request", message:"Card is already active"};
+    if (activeCard) {
+        throw { type: "bad_request", message: "Card is already active" };
     }
 
     const hashedPassword = bcrypt.hashSync(password, 10);
@@ -95,7 +95,7 @@ export async function activateCard(id: number, cvc: string, password: string) {
 export async function getCardById(id: number) {
     const card = await cardRepository.findById(id);
     if (!card) {
-        throw { type: "not_found", message:"no cards registered" };
+        throw { type: "not_found", message: "no cards registered" };
     }
     return card;
 }
@@ -103,22 +103,36 @@ export async function getCardById(id: number) {
 export async function validateExpirationDate(expirationDate: string) {
     const today = dayjs().format("MM/YY");
     if (dayjs(today).isAfter(dayjs(expirationDate))) {
-        throw { type: "bad_request", message:"expiration date card"};
+        throw { type: "bad_request", message: "expiration date card" };
     }
 }
 
-export function validateCVC(cvc:string, cardCVC:string){
+export function validateCVC(cvc: string, cardCVC: string) {
     const cryptr = new Cryptr('myTotallySecretKey');
     const decryptedString = cryptr.decrypt(cardCVC);
 
     console.log("descriptografado", decryptedString);
-    console.log("cvc aqui",cvc);
-    if(cvc !== decryptedString){
-        console.log("banana");
-        throw { type: "unauthorized", message:"invalid CVC" };
+    console.log("cvc aqui", cvc);
+    if (cvc !== decryptedString) {
+        throw { type: "unauthorized", message: "invalid CVC" };
     }
 
 }
+
+export function validatePassword(password: string, cardPassword: string) {
+    const isPasswordValid = bcrypt.compareSync(password, cardPassword);
+    if (!isPasswordValid) {
+        throw { type: "unauthorized", message:"password incorrect"};
+    }
+}
+
+export async function findCardById(cardId: number) {
+
+}
+
+
+
+
 
 
 

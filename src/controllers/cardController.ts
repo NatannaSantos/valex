@@ -23,3 +23,12 @@ export async function activateCard(req: Request, res: Response) {
 
     res.sendStatus(200);
 }
+
+export async function getCardBalance(req: Request, res: Response) {
+    const { cardId } = req.params;
+    
+    await cardService.findCardById(Number(cardId));
+  //  const cardBalance = await paymentService.getBalance(parseInt(cardId));
+
+   // res.status(200).send(cardBalance);
+}

@@ -8,6 +8,10 @@ export async function rechargeCard(apiKey:string, cardId:number, amount:number){
     
     const card = await cardService.getCardById(cardId);
 
+    if (!card.password) {
+        throw { type: "unauthorized", message: "inative card" }
+    }
+
     cardService.validateExpirationDate(card.expirationDate);
     
     await rechargeRepository.insert({cardId,amount});    

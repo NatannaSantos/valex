@@ -12,7 +12,7 @@ export async function createCard(req: Request, res: Response) {
     const { employeeId, type } = req.body;
     console.log("employeeId", employeeId);
     await cardService.createCard(apiKey, employeeId, type);
-    res.sendStatus(201);
+    res.status(201);
 }
 
 export async function activateCard(req: Request, res: Response) {
@@ -21,14 +21,6 @@ export async function activateCard(req: Request, res: Response) {
 
     await cardService.activateCard(Number(id), cvc, password);
 
-    res.sendStatus(200);
+    res.status(200);
 }
 
-export async function getCardBalance(req: Request, res: Response) {
-    const { cardId } = req.params;
-    
-    await cardService.findCardById(Number(cardId));
-  //  const cardBalance = await paymentService.getBalance(parseInt(cardId));
-
-   // res.status(200).send(cardBalance);
-}

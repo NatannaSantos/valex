@@ -68,6 +68,8 @@ function generateSecurityCode() {
     const cryptr = new Cryptr('myTotallySecretKey');
     const encryptedString = cryptr.encrypt(securityCode);
 
+    console.log("security code", securityCode);
+
     return encryptedString;
 
 }
@@ -105,13 +107,14 @@ export async function validateExpirationDate(expirationDate: string) {
     }
 }
 
-export async function validateCVC(cvc:string, cardCVC:string){
+export function validateCVC(cvc:string, cardCVC:string){
     const cryptr = new Cryptr('myTotallySecretKey');
     const decryptedString = cryptr.decrypt(cardCVC);
 
     console.log("descriptografado", decryptedString);
     console.log("cvc aqui",cvc);
-    if(decryptedString!==cvc){
+    if(cvc !== decryptedString){
+        console.log("banana");
         throw { type: "unauthorized", message:"invalid CVC" };
     }
 

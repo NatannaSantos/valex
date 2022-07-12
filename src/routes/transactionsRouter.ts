@@ -8,5 +8,6 @@ const transactionRouter = Router();
 
 transactionRouter.post("/cards/:id/recharge",validateSchemaMiddleware(rechargeCardSchema),transactionsController.rechargeCard);
 transactionRouter.post("/cards/:id/payment",validateSchemaMiddleware(paymentSchema),transactionsController.payment);
+transactionRouter.get("/cards/:id/transactions",transactionsController.getCardBalance);
 
 export default transactionRouter;

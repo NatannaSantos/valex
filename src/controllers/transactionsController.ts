@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import * as rechargeService from "../services/rechargeService.js";
-import * as cardService from "../services/cardService.js";
 import * as paymentService from "../services/paymentService.js";
+import * as transactionService from "../services/transactionService.js";
 
 export async function rechargeCard(req: Request, res: Response) {
     const apiKey = req.headers["x-api-key"] as string;
     const {id} = req.params;
     const { amount } = req.body;
-   console.log("cardId",id)
+   
     if (!apiKey) {
         return res.status(401).send("Invalid API");
     }
@@ -29,10 +29,11 @@ export async function payment(req:Request,res:Response){
 }
 
 export async function getCardBalance(req: Request, res: Response) {
-    const { cardId } = req.params;
-    
-    await cardService.findCardById(Number(cardId));
-  //  const cardBalance = await paymentService.getBalance(parseInt(cardId));
+    const { id } = req.params;
+        
+    const cardBalance = await transactionService.getBalance(Number(id));
+    console.log(cardBalance);
 
-   // res.status(200).send(cardBalance);
+    res.status(200).send({cardBalance});
+  
 }

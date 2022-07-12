@@ -10,7 +10,7 @@ export async function createCard(req: Request, res: Response) {
 
 
     const { employeeId, type } = req.body;
-    console.log("employeeId", employeeId);
+    
     await cardService.createCard(apiKey, employeeId, type);
     res.status(201);
 }

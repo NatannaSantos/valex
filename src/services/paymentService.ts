@@ -37,7 +37,7 @@ export async function payment(id: number, password: string, businessId: number, 
       await paymentRepository.insert({ cardId: id, businessId, amount });  
 }
 
-function getCardAmount(
+export function getCardAmount(
     payments: paymentRepository.PaymentWithBusinessName[],
     recharges: rechargeRepository.Recharge[]
 ) {

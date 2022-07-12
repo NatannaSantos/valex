@@ -68,8 +68,7 @@ function generateSecurityCode() {
     const cryptr = new Cryptr('myTotallySecretKey');
     const encryptedString = cryptr.encrypt(securityCode);
 
-    console.log("security code", securityCode);
-
+    
     return encryptedString;
 
 }
@@ -111,8 +110,7 @@ export function validateCVC(cvc: string, cardCVC: string) {
     const cryptr = new Cryptr('myTotallySecretKey');
     const decryptedString = cryptr.decrypt(cardCVC);
 
-    console.log("descriptografado", decryptedString);
-    console.log("cvc aqui", cvc);
+    
     if (cvc !== decryptedString) {
         throw { type: "unauthorized", message: "invalid CVC" };
     }
@@ -151,10 +149,6 @@ export async function unBlockCard(id:number, password:string){
 
 }
 
-
-export async function findCardById(cardId: number) {
-
-}
 
 
 

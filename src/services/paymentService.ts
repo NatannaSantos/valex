@@ -31,7 +31,7 @@ export async function payment(id: number, password: string, businessId: number, 
     const cardAmount = getCardAmount(payments, recharges);
 
     if (cardAmount < amount) {
-        throw { type: "bad_request" };
+        throw { type: "bad_request", message:"insufficient funds" };
       }
     
       await paymentRepository.insert({ cardId: id, businessId, amount });  

@@ -24,3 +24,21 @@ export async function activateCard(req: Request, res: Response) {
     res.status(200);
 }
 
+export async function blockCard(req: Request, res: Response) {
+    const {id} = req.params;
+    const {password} = req.body;
+
+    await cardService.blockCard(Number(id),password);
+
+    res.status(200);
+}
+
+export async function unBlockCard(req: Request, res: Response) {
+    const {id} = req.params;
+    const {password} = req.body;
+
+    await cardService.unBlockCard(Number(id),password);
+
+    res.status(200);
+}
+

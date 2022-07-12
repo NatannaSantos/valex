@@ -126,6 +126,32 @@ export function validatePassword(password: string, cardPassword: string) {
     }
 }
 
+export async function blockCard(id:number, password:string){
+    const card = await getCardById(id);
+    validateExpirationDate(card.expirationDate);
+
+    if(card.isBlocked === true){
+        throw {type:"conflict", message:"card is block"}
+    }
+
+    await cardRepository.update(id, { isBlocked:true });
+
+}
+
+
+export async function unBlockCard(id:number, password:string){
+    const card = await getCardById(id);
+    validateExpirationDate(card.expirationDate);
+
+    if(card.isBlocked === false){
+        throw {type:"conflict", message:"card is block"}
+    }
+
+    await cardRepository.update(id, { isBlocked:false });
+
+}
+
+
 export async function findCardById(cardId: number) {
 
 }
